@@ -12,5 +12,10 @@
         jmp     PR_WRITTEN_BY
 .endif
 .ifdef EATER
+BASIC_START:
+        jmp COLD_START
+.endif
+.ifdef PICO
+BASIC_START:
         jmp COLD_START
 .endif

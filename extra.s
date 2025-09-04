@@ -31,3 +31,8 @@
 .ifdef EATER
 .include "bios.s"
 .endif
+
+.ifdef PICO
+.include "pico_bios.s"
+.endif
+

@@ -126,6 +126,11 @@ COLD_START:
   .ifdef EATER
         jsr     LCDINIT
   .endif
+  .ifdef PICO
+        jsr     LCDINIT             ; Initialize the LCD
+        LDA     #$00
+        STA     LINE_LENGTH         ; Initialize input buffer line length to zero
+  .endif
 .endif
 
 ; All non-CONFIG_SMALL versions of BASIC have

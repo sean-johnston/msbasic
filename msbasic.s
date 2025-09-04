@@ -35,3 +35,5 @@
 .include "extra.s"
 .include "lcd.s"
 .include "sound.s"
+.include "pico_lcd.s"
+.include "pico_saveload.s"

@@ -317,7 +317,11 @@ RET3:
 		rts
 .endif
 
+.ifdef PICO
+.include "pico_inline.s"
+.else
 .include "inline.s"
+.endif
 
 ; ----------------------------------------------------------------------------
 ; TOKENIZE THE INPUT LINE
@@ -809,3 +813,6 @@ L25FD:
         jsr     OUTDO
         bne     L25FD	; always
 
+.ifdef PICO
+.include "pico_edit.s"
+.endif
