@@ -1,3 +1,19 @@
+# Microsoft BASIC for the Pico-6502
+
+This code was forked from [beneater/msbasic](https://github.com/beneater/msbasic). I have extended it to work with the hardware the from the fork of
+the Pico-6502 [sean-johnston/pico-6502](https://github.com/sean-johnston/pico-6502).
+
+I added the following:
+
+* Full line editing - There is full line ending for the input buffer. This include cursor left and right, delete, home, end. Characters are inserted
+when you type them.
+* Save command (SAVE) - The BASIC file can be saved to the SD card. Saving with a filename that begins with a '@' will replace and existing one.
+* Load command (LOAD) - The BASIC file can be loaded from the SD card.
+* Catalog the directory (CAT) - You can list the files on the SD card.
+* Delete file (DEL) - Delete a file from the SD card
+* Edit a line (EDIT) - Enter EDIT and a line number, will allow you to edit the line in the input buffer.
+* LCD support - The commands LPRINT and LCMD, which was originally LCDPRINT AND LCDCMD.
+
 # Microsoft BASIC for the Ben Eater 6502 project
 
 This code was forked from [mist64/msbasic](https://github.com/mist64/msbasic) and I've added the code from my YouTube videos describing how to port MSBASIC to my 6502 project. The latest commit will match the code from the latest video.
@@ -9,9 +25,8 @@ But if you're following along with earlier videos, the "code" link below will ta
 | ![Video thumbnail][thumbnail1] | [Running MSBASIC on my breadboard 6502 computer][video1] | [a15c8e0][commit1] |
 | ![Video thumbnail][thumbnail2] | [How input buffering works][video2]                      | [54ef9ac][commit2] |
 | ![Video thumbnail][thumbnail2] | [RS232 flow control][video3]                             | [c21542e][commit3] |
-| ![Video thumbnail][thumbnail4] | [Hacking Microsoft BASIC][video4]                        | [f41cac4][commit4] |
-| ![Video thumbnail][thumbnail5] | [Reverse engineering Microsoft BASIC][video5]            | [e00362b][commit5] |
-| ![Video thumbnail][thumbnail6] | [Computer noises][video6]                                | [master][commit6]  |
+| ![Video thumbnail][thumbnail4] | [Hacking Microsoft BASIC][video4]                        | [f41cac4][commit4]  |
+| ![Video thumbnail][thumbnail5] | [Reverse engineering Microsoft BASIC][video5]            | [master][commit5]  |
 
 [thumbnail1]: https://i.ytimg.com/vi/XlbPnihCM0E/mqdefault.jpg
 [video1]: https://youtu.be/XlbPnihCM0E
@@ -33,11 +48,7 @@ But if you're following along with earlier videos, the "code" link below will ta
 
 [thumbnail5]: https://i.ytimg.com/vi/aVVKgwr_SfQ/mqdefault.jpg
 [video5]: https://youtu.be/aVVKgwr_SfQ
-[commit5]: https://github.com/beneater/msbasic/tree/e00362b6eda6ec9fdaec134a30b0ab814f26fc3e
-
-[thumbnail6]: https://i.ytimg.com/vi/tIOR7kRevPU/mqdefault.jpg
-[video6]: https://youtu.be/tIOR7kRevPU
-[commit6]: https://github.com/beneater/msbasic/tree/master
+[commit5]: https://github.com/beneater/msbasic/tree/master
 
 Below is the original README:
 
