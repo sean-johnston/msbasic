@@ -127,7 +127,11 @@ COLD_START:
         jsr     LCDINIT
   .endif
   .ifdef PICO
+        lda     LCD_STATE
+        CMP     #$00
+        BEQ     NO_LCD
         jsr     LCDINIT             ; Initialize the LCD
+NO_LCD:
         LDA     #$00
         STA     LINE_LENGTH         ; Initialize input buffer line length to zero
   .endif
@@ -204,6 +208,11 @@ L4098:
         stx     INPUTBUFFER-3
         stx     INPUTBUFFER-4
   .endif
+  .ifdef PICO
+        inx
+        stx     INPUTBUFFER-3
+        stx     INPUTBUFFER-4
+  .endif
   .ifdef APPLE
         lda     #$01
         sta     INPUTBUFFER-3
@@ -226,7 +235,9 @@ L4098:
   .ifndef AIM65
     .ifndef SYM1
         cmp     #$41
-        beq     PR_WRITTEN_BY
+        bne     NO_PR_WRITTEN_BY
+        JMP     PR_WRITTEN_BY
+NO_PR_WRITTEN_BY:
     .endif
   .endif
         tay

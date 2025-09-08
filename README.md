@@ -12,7 +12,42 @@ when you type them.
 * Catalog the directory (CAT) - You can list the files on the SD card.
 * Delete file (DEL) - Delete a file from the SD card
 * Edit a line (EDIT) - Enter EDIT and a line number, will allow you to edit the line in the input buffer.
-* LCD support - The commands LPRINT and LCMD, which was originally LCDPRINT AND LCDCMD.
+* Execute machine language (SYS) - Added a command to execute machine language.
+* LCD support - This was implemented in Ben Eater's version of BASIC.
+
+## Commands
+
+### SAVE "filename"
+
+Save a file to the SD card. To overwrite the file, put an '@' at the beginning of the file name.
+
+### LOAD "filename"
+
+Loads a file from the SD card. If it does not exist, a "FILE NOT FOUND" error will be displayed.
+
+### CAT
+
+Displays the files from the SD card.
+
+### DEL "filename"
+
+Delete the file from the SD card
+
+### EDIT line-number
+
+Displays the line that you specified, and allows you to edit it.
+
+### SYS memory-location
+
+Executes machine language at the location secified. The machine language returns back to BASIC with the RTS opcode.
+
+### LCDPRINT "string"
+
+Prints the string to the LCD display
+
+### LCDCMD command-number
+
+Send a command to the LCD display. EX: LCMD 1 will clear the screen.
 
 # Microsoft BASIC for the Ben Eater 6502 project
 

@@ -1,5 +1,6 @@
 ; configuration
 CONFIG_2A := 1
+CONFIG_DATAFLG := 1 ; Allow 8 bit characters
 
 CONFIG_SCRTCH_ORDER := 2
 
@@ -13,7 +14,7 @@ ZP_START4 = $6D
 ; extra/override ZP variables
 USR := GORESTART
 
-;INPUTBUFFER     := $0200
+INPUTBUFFER     := $0200
 
 ; constants
 SPACE_FOR_GOSUB := $3E

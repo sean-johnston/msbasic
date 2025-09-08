@@ -88,9 +88,9 @@
 		keyword_rts "SYS", SYS
 		keyword_rts "CAT", CATALOG
 		keyword_rts "DEL", DELETE_FILE
-		keyword_rts "LCMD", LCDCMD
+		keyword_rts "LCDCMD", LCDCMD
 		;keyword_rts "LCDINIT",LCDINIT
-		keyword_rts "LPRINT", LCDPRINT
+		keyword_rts "LCDPRINT", LCDPRINT
 		keyword_rts "EDIT", EDIT
 .endif
 

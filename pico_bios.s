@@ -23,6 +23,8 @@ COUT            = $f001
 FILE_MODE       = $F002
 FILE_DATA       = $F003
 FILE_LOAD_DATA  = $F005
+DEBUG_FLAG      = $F006
+LCD_STATE       = $F007
 
 LOAD:
                 jsr LOAD_PROG

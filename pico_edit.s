@@ -27,6 +27,9 @@ EDIT:
 L25A6Z:
 ;L25A6XZ:
         ldy     #$01
+.ifdef CONFIG_DATAFLG
+        sty     DATAFLG
+.endif
         lda     (LOWTRX),y
         beq     L25E5Z
 LC5A9Z:
@@ -53,7 +56,14 @@ L25CAZ:
         and     #$7F                    ; Remove the high bit from y
 L25CEZ:
         JSR     APPEND_INPUTBUFFER      ; Store character to input buffer
-;LA519Z:
+.ifdef CONFIG_DATAFLG
+        cmp     #$22
+        bne     LA519Z
+        lda     DATAFLG
+        eor     #$FF
+        sta     DATAFLG
+.endif
+LA519Z:
         iny                             ; Increment the pointer
         beq     L25E5Z                  ; If at end of the buffer, end edit
         lda     (LOWTRX),y
@@ -70,6 +80,12 @@ L25E5Z:
         jmp     RESTART                 ; Return from edit by doing a warm start.
 L25E8Z:
         bpl     L25CEZ
+.ifdef CONFIG_DATAFLG
+        cmp     #$FF
+        beq     L25CEZ
+        bit     DATAFLG
+        bmi     L25CEZ
+.endif
         sec
         sbc     #$7F
         tax

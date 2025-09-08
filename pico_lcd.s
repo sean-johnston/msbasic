@@ -36,9 +36,6 @@ lcdbusy:
 LCDINIT:
   lda #$ff ; Set all pins on port B to output
   sta DDRB
-  lda DDRB
-  CMP #$00
-  BEQ NO_IO
 
   lda #%00000011 ; Set 8-bit mode
   sta PORTB
@@ -78,7 +75,6 @@ LCDINIT:
   jsr lcd_instruction
   lda #%00000001 ; Clear display
   jsr lcd_instruction
-  NO_IO:
   rts
 
 

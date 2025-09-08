@@ -1,9 +1,10 @@
 .setcpu "65C02"                         ; We are using 65C02 instructions
 .segment "CODE"
 
-LINE_LENGTH := $FF                      ; Location that holds the line length
+LINE_LENGTH := $12                      ; Location that holds the line length
 CHAR_HOLD   := $FE
 POS_HOLD    := $FE
+END_OF_LINE := $4F
 
 L2420:                                  ; Delete a character from the input buffer
         DEC     LINE_LENGTH             ; Decrement line length since we are delete a character
@@ -60,8 +61,8 @@ INLIN2:
         cmp     #$20                    ; Key is less than space
         bcc     INLIN2                  ; Ignore
 
-        cmp     #$80                    ; Key is greater than 127
-        bcs     INLIN2                  ; Ignore
+        ;cmp     #$80                    ; Key is greater than 127
+        ;bcs     INLIN2                  ; Ignore
 
         cmp     #$7E  ; ~               ; Key is ~
         beq     L2423                   ; Abort line
@@ -71,7 +72,7 @@ INLIN2:
         JMP     PROCESS_DELETE          ; Process the delete
 
 L2443:
-        cpx     #$4F                    ; Check if we got to the end of the buffer
+        cpx     #END_OF_LINE            ; Check if we got to the end of the buffer
         bcs     L244C                   ; If so, don't add a character
 
         CPX     LINE_LENGTH             ; If we are at the end of the buffer
@@ -218,7 +219,7 @@ INSERT_IB:
 INSERT_IB2:
 
         LDA     LINE_LENGTH             ; Get the length of the buffer
-        CMP     #$4F                    ; Have we reached the end
+        CMP     #END_OF_LINE            ; Have we reached the end
         BNE     INSERT_IB3              ; If no, process insert
         JMP     INLIN2                  ; Get the next character
 
