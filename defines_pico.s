@@ -14,7 +14,7 @@ ZP_START4 = $6D
 ; extra/override ZP variables
 USR := GORESTART
 
-INPUTBUFFER     := $0200
+;INPUTBUFFER     := $0200
 
 ; constants
 SPACE_FOR_GOSUB := $3E

@@ -93,7 +93,7 @@ LE878:
 
 .ifndef KBD
 L29B9:
-  .if .def(CBM2) || .def(PICO)
+  .if .def(CBM2) ;|| .def(PICO)
         lda     #$00
         sta     INPUTBUFFER,x
         ldx     #<(INPUTBUFFER-1)

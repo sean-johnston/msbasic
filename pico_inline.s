@@ -1,7 +1,7 @@
 .setcpu "65C02"                         ; We are using 65C02 instructions
 .segment "CODE"
 
-LINE_LENGTH := $12                      ; Location that holds the line length
+LINE_LENGTH := $03FF                      ; Location that holds the line length
 CHAR_HOLD   := $FE
 POS_HOLD    := $FE
 END_OF_LINE := $4F

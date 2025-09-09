@@ -208,11 +208,11 @@ L4098:
         stx     INPUTBUFFER-3
         stx     INPUTBUFFER-4
   .endif
-  .ifdef PICO
-        inx
-        stx     INPUTBUFFER-3
-        stx     INPUTBUFFER-4
-  .endif
+  ;.ifdef PICO
+  ;      inx
+  ;      stx     INPUTBUFFER-3
+  ;      stx     INPUTBUFFER-4
+  ;.endif
   .ifdef APPLE
         lda     #$01
         sta     INPUTBUFFER-3
