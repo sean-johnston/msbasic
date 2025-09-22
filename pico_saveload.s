@@ -102,12 +102,15 @@ CATALOG:
             ; Read the catalog
 READ_NEXT:
             LDA FILE_LOAD_DATA      ; Read the next byte
+            CMP #$00                ; Check if we have a zero
+            BEQ ZERO_INPUT          ; Ignore it
             JSR CHROUT              ; Output it
+ZERO_INPUT:
             DEC INDEX               ; Decrement the low byte of the index
             LDA INDEX               ; Load it into A
             CMP #$FF                ; Check it rolled over
             BNE COMPARE_FOR_ZERO    ; If it didn't, compare if we reached the end 
-            DEC INDEX + 1           ; Increment the high byte of the index
+            DEC INDEX + 1           ; Decrement the high byte of the index
 
             ; Check if we reached the end
 COMPARE_FOR_ZERO:
