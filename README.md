@@ -19,19 +19,20 @@ when you type them.
 
 ### SAVE "filename"
 
-Save a file to the SD card. To overwrite the file, put an '@' at the beginning of the file name.
+Save a file to the SD card. To overwrite the file, put an '@' at the beginning of the file name. Subdirectories can be used when saving, by using the '/' character. The directory will
+be created if it does not exist.
 
 ### LOAD "filename"
 
-Loads a file from the SD card. If it does not exist, a "FILE NOT FOUND" error will be displayed.
+Loads a file from the SD card. If it does not exist, a "FILE NOT FOUND" error will be displayed. Subdirectories can be used when saving, by using the '/' character.
 
 ### CAT
 
-Displays the files from the SD card.
+Displays the files from the SD card. Subdirectories can be used when saving, by using the '/' character.
 
 ### DEL "filename"
 
-Delete the file from the SD card
+Delete the file from the SD card. Subdirectories can be used when saving, by using the '/' character.
 
 ### EDIT line-number
 

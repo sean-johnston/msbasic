@@ -5,8 +5,8 @@ SAVE_PROG:
             jsr FRMEVL              ; Evaluate the parameter
             bit VALTYP              ; Check if it is a string
             bmi SAVE_PROG1          ; If so, save program
-            jsr FOUT                
-            jsr STRLIT
+            LDX #ERR_ILLQTY
+            JMP ERROR
 SAVE_PROG1:
             jsr FREFAC              ; Get the string, and store it the position in INDEX
             ldy #0                  
@@ -66,13 +66,15 @@ COMPARE_PROG_END:
 NOT_EQUAL_HIGH:
             JMP NEXT_PROG_BYTE      ; Jump back to do the next byte
 
+FILE_EXIST:
+            JMP SHOW_FILE_EXIST
             ; File save done
 EQUAL_16BIT:
             LDA #$FD                ; Save the data        
             STA FILE_MODE           ; Set mode to save data
             LDA FILE_DATA           ; Read the status
             CMP #$06
-            BEQ SHOW_FILE_EXIST     ; If file exists
+            BEQ FILE_EXIST          ; If file exists
             CMP #$00
             BNE SHOW_IO_ERROR       ; If error, print I/O error
 
@@ -86,8 +88,36 @@ EQUAL_16BIT:
             rts                     ; Return
 
 CATALOG:
+            PHA
             LDA #$00                ; Clear
             STA FILE_MODE           ; Reset the file system
+            PLA
+            beq CAT_START           ; If no parameter, jump to catalog
+
+            jsr FRMEVL              ; Evaluate the parameter
+            bit VALTYP              ; Check if it is a string
+            bmi CATALOG1            ; If so, save program
+            LDX #ERR_ILLQTY
+            JMP ERROR
+CATALOG1:
+            jsr FREFAC              ; Get the string, and store it the position in INDEX
+            ldy #0
+            STY FILE_MODE           ; Clear data
+            dey                     ; Decrement Y to get file mode
+            STY FILE_MODE           ; Start filename
+            tax                     ; Transfer length to X
+            iny                     ; Increment Y to 0
+            STX FILE_DATA           ; Send filename length
+
+            ; Send the filename
+CAT_LOOP:
+            lda (INDEX),y           ; Get filename byte
+            STA FILE_DATA           ; Send it
+            iny                     ; Increment Y index for filename
+            dex                     ; Decrement x filename length counter
+            bne CAT_LOOP            ; If x is 0, filename is done, start sending data
+
+CAT_START:
             LDA #$FB                ; Catalog
             STA FILE_MODE           ; Request a catalog
             LDA FILE_DATA           ; Get error status
@@ -140,8 +170,8 @@ LOAD_PROG:
             jsr FRMEVL              ; Evaluate first parameter
             bit VALTYP              ; Check if it is the correct type
             bmi LOAD_PROG1          ; If so, load the program
-            jsr FOUT                
-            jsr STRLIT
+            LDX #ERR_ILLQTY
+            JMP ERROR
 LOAD_PROG1:
             jsr FREFAC              ; Get the string, and store it the position in INDEX
             ldy #0
@@ -227,8 +257,8 @@ DELETE_FILE:
             jsr FRMEVL              ; Evaluate first parameter
             bit VALTYP              ; Check if it is the correct type
             bmi DELETE_FILE1        ; If so, load the program
-            jsr FOUT                
-            jsr STRLIT
+            LDX #ERR_ILLQTY
+            JMP ERROR
 DELETE_FILE1:
             jsr FREFAC              ; Get the string, and store it the position in INDEX
             ldy #0
