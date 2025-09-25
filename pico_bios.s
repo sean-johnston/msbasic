@@ -137,7 +137,7 @@ IRQ_HANDLER:
 ;                pla
                 rti
 
-.include "wozmon.s"
+.include "pico_wozmon.s"
 
 .segment "RESETVEC"
                 .word   $0F00           ; NMI vector

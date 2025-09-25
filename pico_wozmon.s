@@ -1,5 +1,3 @@
-;  .org $8000
-;  .org $fe00
 .setcpu "65C02"
 .segment "WOZMON"
 
@@ -19,10 +17,6 @@ XCHROUT = $F001
 XCHRIN = $F004
 
 RESET:
-                LDA     #$1F           ; 8-N-1, 19200 baud.
-                STA     ACIA_CTRL
-                LDA     #$0B           ; No parity, no echo, no interrupts.
-                STA     ACIA_CMD
                 LDA     #$1B           ; Begin with escape.
 
 NOTCR:
@@ -46,10 +40,6 @@ BACKSPACE:      DEY                    ; Back up text index.
                 BMI     GETLINE        ; Beyond start of line, reinitialize.
 
 NEXTCHAR:
-;                LDA     ACIA_STATUS    ; Check status.
-;                AND     #$08           ; Key ready?
-;                BEQ     NEXTCHAR       ; Loop until ready.
-;                LDA     ACIA_DATA      ; Load character. B7 will be '0'.
                 LDA     XCHRIN
                 BEQ     NEXTCHAR
                 STA     IN,Y           ; Add to text buffer.
@@ -79,6 +69,10 @@ NEXTITEM:
                 BEQ     SETSTOR        ; Yes, set STOR mode.
                 CMP     #$52           ; "R"?
                 BEQ     RUNPROG        ; Yes, run user program.
+                CMP     #$58           ; "X"?
+                BNE     NEXTITEM1      ; No, continue
+                RTS                    ; Exit Wozmon
+NEXTITEM1:
                 STX     L              ; $00 -> L.
                 STX     H              ;    and H.
                 STY     YSAV           ; Save Y for comparison
@@ -190,9 +184,5 @@ ECHO:
                 LDA     #$0a
                 STA     XCHROUT
 NOLF:
-;                STA     ACIA_DATA      ; Output character.
-;                LDA     #$FF           ; Initialize delay loop.
-;TXDELAY:        DEC                    ; Decrement A.
-;                BNE     TXDELAY        ; Until A gets to 0.
                 PLA                    ; Restore A.
                 RTS                    ; Return.

@@ -50,6 +50,10 @@ Prints the string to the LCD display
 
 Send a command to the LCD display. EX: LCMD 1 will clear the screen.
 
+### Accessing Wozmon
+
+To go to Wozmon, execute the command SYS 65024. When in Wozmon, use 'X' to exit back to BASIC.
+
 # Microsoft BASIC for the Ben Eater 6502 project
 
 This code was forked from [mist64/msbasic](https://github.com/mist64/msbasic) and I've added the code from my YouTube videos describing how to port MSBASIC to my 6502 project. The latest commit will match the code from the latest video.

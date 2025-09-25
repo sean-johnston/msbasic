@@ -311,9 +311,9 @@ LCD_INIT_MSG:
             .asciiz "LCD WAS INITIALIZED"
 
 SHOW_LCD_INIT:
-            LDA #<LCD_INIT_MSG          ; Get low byte of I/O error string
+            LDA #<LCD_INIT_MSG      ; Get low byte of I/O error string
             STA INDEX               ; Store it in low byte of index
-            LDA #>LCD_INIT_MSG          ; Get hight byte of I/O error string
+            LDA #>LCD_INIT_MSG      ; Get hight byte of I/O error string
             STA INDEX + 1           ; Store it in high byte of index
             JMP OUTPUT_MESSAGE      ; Call output message
 
