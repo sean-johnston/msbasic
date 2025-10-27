@@ -127,6 +127,8 @@ COLD_START:
         jsr     LCDINIT
   .endif
   .ifdef PICO
+        LDA     #$00
+        STA     EXTRA_TABLE_FLAG
         lda     LCD_STATE
         CMP     #$00
         BEQ     NO_LCD

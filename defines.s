@@ -94,6 +94,3 @@ LF=10
 CRLF_1 := CR
 CRLF_2 := LF
 .endif
-
-
-

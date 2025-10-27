@@ -1,10 +1,7 @@
 .setcpu "65C02"                         ; We are using 65C02 instructions
-.segment "CODE"
+.segment "KERNAL"
 
-LINE_LENGTH := $03FF                      ; Location that holds the line length
-CHAR_HOLD   := $FE
-POS_HOLD    := $FE
-END_OF_LINE := $4F
+END_OF_LINE     := $4F
 
 L2420:                                  ; Delete a character from the input buffer
         DEC     LINE_LENGTH             ; Decrement line length since we are delete a character

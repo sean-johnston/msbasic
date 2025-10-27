@@ -13,10 +13,10 @@ MODE  = $2B                            ; $00=XAM, $7F=STOR, $AE=BLOCK XAM
 
 IN    = $0200                          ; Input buffer
 
-XCHROUT = $F001
-XCHRIN = $F004
+XCHROUT = $D101
+XCHRIN = $D104
 
-RESET:
+WOZMON:
                 LDA     #$1B           ; Begin with escape.
 
 NOTCR:
@@ -40,10 +40,10 @@ BACKSPACE:      DEY                    ; Back up text index.
                 BMI     GETLINE        ; Beyond start of line, reinitialize.
 
 NEXTCHAR:
-                LDA     XCHRIN
+                JSR     CHRIN
                 BEQ     NEXTCHAR
                 STA     IN,Y           ; Add to text buffer.
-                JSR     ECHO           ; Display character.
+                ;JSR     ECHO           ; Display character.
                 CMP     #$0D           ; CR?
                 BNE     NOTCR          ; No.
 
@@ -178,11 +178,11 @@ PRHEX:
 
 ECHO:
                 PHA                    ; Save A.
-                STA     XCHROUT
+                JSR     CHROUT
                 CMP     #$0D
                 BNE     NOLF
                 LDA     #$0a
-                STA     XCHROUT
+                JSR     CHROUT
 NOLF:
                 PLA                    ; Restore A.
                 RTS                    ; Return.

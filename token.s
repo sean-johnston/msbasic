@@ -81,7 +81,7 @@
 .ifdef EATER
 		keyword_rts "LCDCMD", LCDCMD
 		keyword_rts "LCDPRINT", LCDPRINT
-                keyword_rts "BEEP", BEEP
+        keyword_rts "BEEP", BEEP
 .endif
 
 .ifdef PICO
@@ -92,6 +92,7 @@
 		;keyword_rts "LCDINIT",LCDINIT
 		keyword_rts "LCDPRINT", LCDPRINT
 		keyword_rts "EDIT", EDIT
+		keyword_rts "MON", WOZMON
 .endif
 
 		count_tokens

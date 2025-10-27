@@ -37,3 +37,5 @@
 .include "sound.s"
 .include "pico_lcd.s"
 .include "pico_saveload.s"
+.include "pico_io.s"
+

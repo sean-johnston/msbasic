@@ -1,4 +1,4 @@
-.segment "CODE"
+.segment "KERNAL"
 .ifdef PICO
 
 SAVE_PROG:

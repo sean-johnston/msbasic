@@ -1,7 +1,7 @@
 ; configuration
-CONFIG_2A := 1
-CONFIG_DATAFLG := 1 ; Allow 8 bit characters
-
+CONFIG_2A           := 1
+CONFIG_DATAFLG      := 1 ; Allow 8 bit characters
+TOKEN_ALT           := 1
 CONFIG_SCRTCH_ORDER := 2
 
 ; zero page
@@ -18,7 +18,14 @@ USR := GORESTART
 
 ; constants
 SPACE_FOR_GOSUB := $3E
-STACK_TOP := $FA
-WIDTH := 79
-WIDTH2 := 30
-RAMSTART2 := $0400
+STACK_TOP       := $FA
+WIDTH           := 79
+WIDTH2          := 30
+RAMSTART2       := $0400
+
+LINE_LENGTH     := $FC                      ; Location that holds the line length
+.ifdef TOKEN_ALT
+EXTRA_TABLE_FLAG := $FD
+.endif
+POS_HOLD        := $FE
+

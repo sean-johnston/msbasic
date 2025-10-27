@@ -48,11 +48,13 @@ Prints the string to the LCD display
 
 ### LCDCMD command-number
 
-Send a command to the LCD display. EX: LCMD 1 will clear the screen.
+Send a command to the LCD display. EX: LCDCMD 1 will clear the display.
 
 ### Accessing Wozmon
 
-To go to Wozmon, execute the command SYS 65024. When in Wozmon, use 'X' to exit back to BASIC.
+To go to Wozmon, run the MON command or execute the command SYS 65024. When in Wozmon, use 'X' to exit back to BASIC.
+
+The memory map for Pico version of MSBASIC can be found here: [Pico Memory Map](information/pico-mem-map.md)
 
 # Microsoft BASIC for the Ben Eater 6502 project
 

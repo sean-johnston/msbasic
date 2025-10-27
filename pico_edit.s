@@ -34,7 +34,6 @@ L25A6Z:
         beq     L25E5Z
 LC5A9Z:
         jsr     ISCNTC
-        jsr     CRDO
         iny
         lda     (LOWTRX),y
         tax
@@ -91,19 +90,32 @@ L25E8Z:
         tax
         sty     FORPNT
         ldy     #$FF
+.ifdef TOKEN_ALT
+        sty     EXTRA_TABLE_FLAG
+.endif
 L25F2Z:
         dex
         beq     L25FDZ
 L25F5Z:
+.ifdef TOKEN_ALT
+        jsr     increment_token_list
+        jsr     read_token_byte
+.else
         iny
         lda     TOKEN_NAME_TABLE,y
+.endif
         bpl     L25F5Z
         bmi     L25F2Z
 
 ; Output token to the input buffer
 L25FDZ:
+.ifdef TOKEN_ALT
+        jsr     increment_token_list
+        jsr     read_token_byte
+.else
         iny
         lda     TOKEN_NAME_TABLE,y
+.endif
         bmi     L25CAZ
 
         JSR     APPEND_INPUTBUFFER
@@ -148,3 +160,4 @@ APPEND_INPUTBUFFER:
         INC     LINE_LENGTH
         PLX
         RTS
+ 

@@ -8,6 +8,20 @@
 
 .segment "CODE"
 
+.ifdef TOKEN_ALT
+GET_UPPER:
+        lda     INPUTBUFFERX,x
+LF430:
+        cmp     #'a'
+        bcc     LF43A
+        cmp     #'z'+1
+        bcs     LF43A
+LF438:
+        sbc     #$1F
+LF43A:
+        rts
+.endif
+
 MEMERR:
         ldx     #ERR_MEMFULL
 
@@ -365,13 +379,24 @@ L248C:
         ldy     #$00
         sty     EOLPNTR
         dey
+.ifdef TOKEN_ALT
+        sty     EXTRA_TABLE_FLAG
+.endif
         stx     TXTPTR
         dex
 L2496:
+.ifdef TOKEN_ALT
+        jsr     increment_token_list
+.else
         iny
+.endif
 L2497:
         inx
 L2498:
+.ifdef TOKEN_ALT
+        jsr     GET_UPPER
+
+.else
 .ifdef KBD
         jsr     GET_UPPER
 .else
@@ -381,8 +406,24 @@ L2498:
         beq     L2497
   .endif
 .endif
+.endif
+.ifdef TOKEN_ALT
+        bit EXTRA_TABLE_FLAG
+        bmi @extra
+
         sec
+        sbc TOKEN_NAME_TABLE, y
+        jmp @notuse
+@extra:
+.endif
+        sec
+.ifdef TOKEN_ALT
+        sbc TOKEN_NAME_TABLE+$100, y
+@notuse:
+.else
         sbc     TOKEN_NAME_TABLE,y
+.endif
+
         beq     L2496
         cmp     #$80
         bne     L24D7
@@ -431,10 +472,19 @@ L24D7:
         ldx     TXTPTR
         inc     EOLPNTR
 L24DB:
+.ifdef TOKEN_ALT
+        jsr     increment_token_list
+        jsr     read_token_prev_byte
+.else
         iny
         lda     MATHTBL+28+1,y
+.endif
         bpl     L24DB
+.ifdef TOKEN_ALT
+        jsr     read_token_byte
+.else
         lda     TOKEN_NAME_TABLE,y
+.endif
         bne     L2498
         lda     INPUTBUFFERX,x
         bpl     L24AA
@@ -447,6 +497,49 @@ L24EA:
         lda     #<INPUTBUFFER-1
         sta     TXTPTR
         rts
+
+.ifdef TOKEN_ALT
+;; Allows use more than two tokens tables
+;; Working instead INY, just swapping flag on overflow
+increment_token_list:
+        iny
+        bne @keep_same
+
+        php
+        pha
+
+        lda EXTRA_TABLE_FLAG
+        eor #$ff
+        sta EXTRA_TABLE_FLAG
+
+        pla
+        plp
+@keep_same:
+        rts
+
+;; Reads byte from one of the tokens table
+read_token_byte:
+        bit EXTRA_TABLE_FLAG
+        bmi @extra
+
+        lda TOKEN_NAME_TABLE, y
+        rts
+@extra:
+        lda TOKEN_NAME_TABLE+$100, y
+        rts
+
+;; Reads prev. byte from token table
+read_token_prev_byte:
+        bit EXTRA_TABLE_FLAG
+        bmi @extra
+
+        lda TOKEN_NAME_TABLE-1, y
+        rts
+@extra:
+        lda TOKEN_NAME_TABLE+$ff, y
+        rts
+
+.endif
 
 ; ----------------------------------------------------------------------------
 ; SEARCH FOR LINE
@@ -798,17 +891,30 @@ L25E8:
         tax
         sty     FORPNT
         ldy     #$FF
+.ifdef TOKEN_ALT
+        sty     EXTRA_TABLE_FLAG
+.endif
 L25F2:
         dex
         beq     L25FD
 L25F5:
+.ifdef TOKEN_ALT
+        jsr     increment_token_list
+        jsr     read_token_byte
+.else
         iny
         lda     TOKEN_NAME_TABLE,y
+.endif
         bpl     L25F5
         bmi     L25F2
 L25FD:
+.ifdef TOKEN_ALT
+        jsr     increment_token_list
+        jsr     read_token_byte
+.else
         iny
         lda     TOKEN_NAME_TABLE,y
+.endif
         bmi     L25CA
         jsr     OUTDO
         bne     L25FD	; always
